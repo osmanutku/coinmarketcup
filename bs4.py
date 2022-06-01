@@ -15,29 +15,16 @@ def veri_alPrice (url):
         soup = BeautifulSoup(page.content, "html.parser")
         if page.status_code == 200:
             div_price = soup.find_all("div", attrs={"class": "priceValue"})
-            value=div_price[0].find("span").text
-            return value
-        else:
-            return page.status_code
-    except Exception as e:
-        return e
-
-def veri_alRank (url):
-    try:
-        page=requests.get(url)
-        soup = BeautifulSoup(page.content, "html.parser")
-        if page.status_code == 200:
+            value1=div_price[0].find("span").text
             div_rank = soup.find_all("div", attrs={"class": "namePill namePillPrimary"})
-            value=div_rank[0].text
-            return value
+            value2=div_rank[0].text
+            return value1,value2
         else:
             return page.status_code
     except Exception as e:
         return e
-    
 
 for i in range(len(coin)):
     urlplas=URL+coin[i]
-    text=veri_alPrice(urlplas)
-    text2=veri_alRank(urlplas)
-    print(text2+".  " + coin[i]+" : "+text)
+    text, text2=veri_alPrice(urlplas)
+    print(text2+".  " + coin[i]+" :   "+text)
